@@ -16,6 +16,9 @@ all: 01 02 03
 03: 03_sorted.x
 	for i in `seq 1 6 `; do ./03_sorted.x < ../data/d1\_$$i.dat; done
 
+04: 04_rsorted.x
+	for j in `seq 1 2`;do for i in `seq 1 6 `; do ./04_rsorted.x < ../data/d$$j\_$$i.dat; done ;done
+
 01_readint.x: 01_readint.o
 	$(FC) $^ -o $@
 
@@ -23,6 +26,9 @@ all: 01 02 03
 	$(FC) $^ -o $@
 
 03_sorted.x: list_tools.o 03_sorted.o
+	$(FC) $^ -o $@
+
+04_rsorted.x: list_tools.o 04_rsorted.o
 	$(FC) $^ -o $@
 
 
