@@ -23,9 +23,3 @@ IMPLICIT NONE
   END IF
 
 END PROGRAM readint
-
-
-      !read(99, *), n
-      !read(99,*) x
-
-      !write(*,*) x
