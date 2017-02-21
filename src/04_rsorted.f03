@@ -23,6 +23,8 @@ IMPLICIT NONE
     PRINT*, 'Wrong, my sum is', mysum , &
     'which is different from', correctsum
   end if
-  PRINT*, 'Sorted?', issorted_real(lengthfile, x)
+  PRINT*, 'Check if sorted by ascending order (default)', issorted_real(lengthfile, x)
+  PRINT*, 'Check if sorted by ascending order', issorted_real(lengthfile, x, des)
+  PRINT*, 'Check if sorted by descending order', issorted_real(lengthfile, x, des)
 
 END PROGRAM readint
