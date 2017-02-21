@@ -1,6 +1,6 @@
 
 PROGRAM readint
-USE list_tools
+!USE list_tools
 IMPLICIT NONE
   INTEGER, DIMENSION(:), ALLOCATABLE :: x
   INTEGER :: lengthfile
@@ -23,6 +23,22 @@ IMPLICIT NONE
     PRINT*, 'Wrong, my sum is', mysum , &
     'which is different from', correctsum
   end if
-  PRINT*, 'Sorted?', issorted(lengthfile, x)
+  PRINT*, 'Sorted?', is_sorted(x)
+
+contains
+
+  LOGICAL FUNCTION is_sorted(x)
+    INTEGER, INTENT(IN) :: x(:)
+    !INTEGER, INTENT(IN) :: lengthfile
+    INTEGER :: i
+    do i = 1, lengthfile-1
+      if (x(i) > x(i+1)) then
+        is_sorted = .FALSE.
+        exit
+      else
+        is_sorted = .TRUE.
+      end if
+    end do
+  END FUNCTION is_sorted
 
 END PROGRAM readint

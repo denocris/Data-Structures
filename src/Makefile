@@ -25,7 +25,7 @@ all: 01 02 03
 02_readreal.x: 02_readreal.o
 	$(FC) $^ -o $@
 
-03_sorted.x: list_tools.o 03_sorted.o
+03_sorted.x: 03_sorted.o
 	$(FC) $^ -o $@
 
 04_rsorted.x: list_tools.o 04_rsorted.o
