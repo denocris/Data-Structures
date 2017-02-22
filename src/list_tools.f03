@@ -6,6 +6,7 @@ INTERFACE is_sorted
   MODULE PROCEDURE is_sorted_real, is_sorted_int, is_sorted_pair
 END INTERFACE is_sorted
 
+
 LOGICAL, PARAMETER :: asc = .TRUE., des = .FALSE.
 LOGICAL, PARAMETER :: byvalue = .TRUE., bykey = .FALSE.
 
@@ -67,6 +68,7 @@ CONTAINS
     end if
   END FUNCTION is_sorted_int
 
+
   LOGICAL FUNCTION is_sorted_pair(lengthfile, list, ordering, which_one)
     TYPE(pair), INTENT(IN) :: list(:)
     INTEGER, INTENT(IN) :: lengthfile
@@ -115,7 +117,32 @@ CONTAINS
           end do
       end if
     end if
-
   END FUNCTION is_sorted_pair
+
+  ! pick two randomly chosen elements in array 'dat'
+  ! and swap them. do this 'count' times.
+  SUBROUTINE swap(dat,count)
+    IMPLICIT NONE
+    REAL, DIMENSION(:),INTENT(inout) :: dat
+    INTEGER, INTENT(in) :: count
+    REAL,DIMENSION(2) :: rval
+    INTEGER :: i,num,i1,i2
+    REAL :: tmp
+
+    num = SIZE(dat,1)
+    DO i=1,count
+        ! pick two elements at random
+        CALL RANDOM_NUMBER(rval)
+        rval = rval*REAL(num)+0.5
+        i1 = INT(rval(1))
+        i2 = INT(rval(2))
+        ! paranoia check to avoid out-of-bounds access
+        IF ((i1 < 1) .OR. (i1 > num) .OR. (i2 < 1) .OR. (i2 > num)) CYCLE
+        ! swap the elements
+        tmp = dat(i1)
+        dat(i1) = dat(i2)
+        dat(i2) = tmp
+    END DO
+  END SUBROUTINE swap
 
 END MODULE

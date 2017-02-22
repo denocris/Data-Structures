@@ -2,12 +2,6 @@ PROGRAM readint
 USE list_types
 IMPLICIT NONE
 
-  TYPE pair
-    INTEGER :: key
-    REAL :: val
-  END TYPE pair
-
-
   TYPE(pair), DIMENSION(:), ALLOCATABLE :: list
   INTEGER :: lengthfile
   REAL :: correctsum

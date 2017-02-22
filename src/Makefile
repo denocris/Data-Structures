@@ -28,6 +28,9 @@ all: 01 02 03
 08: 08_multmodules.x
 	for i in `seq 1 6 `; do ./08_multmodules.x < ../data/d3\_$$i.dat; done
 
+09: 09_simplesort.x
+		for i in `seq 1 6 `; do ./09_simplesort.x < ../data/d1\_$$i.dat; done
+
 01_readint.x: 01_readint.o
 	$(FC) $^ -o $@
 
@@ -49,8 +52,14 @@ all: 01 02 03
 08_multmodules.x: list_types.o list_tools.o 08_multmodules.o
 	$(FC) $^ -o $@
 
+09_simplesort.x: list_types.o list_tools.o sorting.o 09_simplesort.o
+	$(FC) $^ -o $@
+
 
 %.o: %.f03
+	$(FC) -c $< $(FFLAGS) -o $@
+
+%.o: %.f90
 	$(FC) -c $< $(FFLAGS) -o $@
 
 

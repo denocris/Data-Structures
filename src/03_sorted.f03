@@ -23,7 +23,7 @@ IMPLICIT NONE
     PRINT*, 'Wrong, my sum is', mysum , &
     'which is different from', correctsum
   end if
-  PRINT*, 'Sorted?', is_sorted(lengthfile, x)
+  PRINT*, 'Is it Sorted?', is_sorted(lengthfile, x)
 
   DEALLOCATE(x)
 
