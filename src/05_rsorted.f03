@@ -24,9 +24,9 @@ IMPLICIT NONE
     PRINT*, 'Wrong, my sum is', mysum , &
     'which is different from', correctsum
   end if
-  PRINT*, 'Check if sorted by ascending order (default)', is_sorted(lengthfile, x)
-  PRINT*, 'Check if sorted by ascending order', is_sorted(lengthfile, x, des)
-  PRINT*, 'Check if sorted by descending order', is_sorted(lengthfile, x, des)
+  PRINT*, 'Check if sorted in ascending order (default)', is_sorted(lengthfile, x)
+  PRINT*, 'Check if sorted in ascending order', is_sorted(lengthfile, x, asc)
+  PRINT*, 'Check if sorted in descending order', is_sorted(lengthfile, x, des)
 
   DEALLOCATE(x)
 

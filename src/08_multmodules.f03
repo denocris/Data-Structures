@@ -1,13 +1,7 @@
+
 PROGRAM readint
-USE list_types
+USE list_tools
 IMPLICIT NONE
-
-  TYPE pair
-    INTEGER :: key
-    REAL :: val
-  END TYPE pair
-
-
   TYPE(pair), DIMENSION(:), ALLOCATABLE :: list
   INTEGER :: lengthfile
   REAL :: correctsum
@@ -20,14 +14,19 @@ IMPLICIT NONE
   READ(5,*) correctsum
 
   mysum = SUM(list%val)
+  !mysum = SUM(x) + 1 ! to test if statement
+
 
   PRINT*, 'The length of the array is', lengthfile
-  IF ( ABS(mysum - correctsum)/ ABS(mysum) < 1.0e-5 ) THEN
+  if ( ABS(mysum - correctsum)/ ABS(mysum) < 1.0e-5 ) then
     PRINT*, 'The sum is Correct!', mysum
-  ELSE
+  else
     PRINT*, 'Wrong, my sum is', mysum , &
     'which is different from', correctsum
-  END IF
+  end if
+  PRINT*, 'Check if sorted by value in ascending order (default)', is_sorted(lengthfile, list)
+  PRINT*, 'Check if sorted by value in ascending order', is_sorted(lengthfile, list, asc, byvalue)
+  PRINT*, 'Check if sorted by key in descending order', is_sorted(lengthfile, list, des, bykey)
 
   DEALLOCATE(list)
 

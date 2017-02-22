@@ -25,6 +25,9 @@ all: 01 02 03
 07: 07_dertypes.x
 	for i in `seq 1 6 `; do ./07_dertypes.x < ../data/d3\_$$i.dat; done
 
+08: 08_multmodules.x
+	for i in `seq 1 6 `; do ./08_multmodules.x < ../data/d3\_$$i.dat; done
+
 01_readint.x: 01_readint.o
 	$(FC) $^ -o $@
 
@@ -41,6 +44,9 @@ all: 01 02 03
 	$(FC) $^ -o $@
 
 07_dertypes.x: list_tools.o 07_dertypes.o
+	$(FC) $^ -o $@
+
+08_multmodules.x: list_types.o list_tools.o 08_multmodules.o
 	$(FC) $^ -o $@
 
 
