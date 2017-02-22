@@ -25,4 +25,6 @@ IMPLICIT NONE
   end if
   PRINT*, 'Sorted?', is_sorted(lengthfile, x)
 
+  DEALLOCATE(x)
+
 END PROGRAM readint

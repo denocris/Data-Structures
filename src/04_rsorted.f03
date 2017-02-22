@@ -24,4 +24,7 @@ IMPLICIT NONE
     'which is different from', correctsum
   end if
   PRINT*, 'Check if sorted by ascending order (default)', is_sorted(lengthfile, x)
+
+  DEALLOCATE(x)
+
 END PROGRAM readint

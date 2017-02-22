@@ -1,18 +1,24 @@
 PROGRAM readint
 IMPLICIT NONE
-  REAL, DIMENSION(:), ALLOCATABLE :: x
+
+  TYPE pair
+    INTEGER :: key
+    REAL :: val
+  END TYPE pair
+
+
+  TYPE(pair), DIMENSION(:), ALLOCATABLE :: list
   INTEGER :: lengthfile
   REAL :: correctsum
   REAL :: mysum = 0
   INTEGER :: i
 
   READ(5,*) lengthfile ! read first line
-  ALLOCATE(x(lengthfile))
-  READ(5,*) (x(i), i=1,lengthfile)
+  ALLOCATE(list(lengthfile))
+  READ(5,*) (list(i), i=1,lengthfile)
   READ(5,*) correctsum
 
-  mysum = SUM(x)
-  !mysum = SUM(x) + 1 ! to test if statement
+  mysum = SUM(list%val)
 
   PRINT*, 'The length of the array is', lengthfile
   IF ( ABS(mysum - correctsum)/ ABS(mysum) < 1.0e-5 ) THEN
@@ -22,6 +28,6 @@ IMPLICIT NONE
     'which is different from', correctsum
   END IF
 
-  DEALLOCATE(x)
+  DEALLOCATE(list)
 
 END PROGRAM readint

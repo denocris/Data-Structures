@@ -28,4 +28,6 @@ IMPLICIT NONE
   PRINT*, 'Check if sorted by ascending order', is_sorted(lengthfile, x, des)
   PRINT*, 'Check if sorted by descending order', is_sorted(lengthfile, x, des)
 
+  DEALLOCATE(x)
+
 END PROGRAM readint

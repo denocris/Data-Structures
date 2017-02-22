@@ -22,4 +22,6 @@ IMPLICIT NONE
     'which is different from', correctsum
   END IF
 
+  DEALLOCATE(x)
+
 END PROGRAM readint
