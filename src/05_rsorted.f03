@@ -16,6 +16,7 @@ IMPLICIT NONE
   mysum = SUM(x)
   !mysum = SUM(x) + 1 ! to test if statement
 
+
   PRINT*, 'The length of the array is', lengthfile
   if ( ABS(mysum - correctsum)/ ABS(mysum) < 1.0e-5 ) then
     PRINT*, 'The sum is Correct!', mysum
