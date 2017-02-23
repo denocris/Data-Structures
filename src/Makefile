@@ -31,6 +31,22 @@ all: 01 02 03
 09: 09_simplesort.x
 	./09_simplesort.x
 
+10: 10_bublesort.x
+	./10_bublesort.x
+
+11: 11_insertionsort.x
+	./11_insertionsort.x
+
+12: 12_quicksort.x
+	./12_quicksort.x
+
+13: 13_mergesort.x
+	./13_mergesort.x
+
+14: 14_hybridsort.x
+	./14_hybridsort.x
+
+
 01_readint.x: 01_readint.o
 	$(FC) $^ -o $@
 
@@ -53,6 +69,21 @@ all: 01 02 03
 	$(FC) $^ -o $@
 
 09_simplesort.x: list_types.o list_tools.o sorting.o 09_simplesort.o
+	$(FC) $^ -o $@
+
+10_bublesort.x: list_types.o list_tools.o sorting.o 10_bublesort.o
+	$(FC) $^ -o $@
+
+11_insertionsort.x: list_types.o list_tools.o sorting.o 11_insertionsort.o
+	$(FC) $^ -o $@
+
+12_quicksort.x: list_types.o list_tools.o sorting.o 12_quicksort.o
+	$(FC) $^ -o $@
+
+13_mergesort.x: list_types.o list_tools.o sorting.o 13_mergesort.o
+	$(FC) $^ -o $@
+
+14_hybridsort.x: list_types.o list_tools.o sorting.o 14_hybridsort.o
 	$(FC) $^ -o $@
 
 

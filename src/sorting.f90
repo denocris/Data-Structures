@@ -1,7 +1,7 @@
 MODULE sorting
   IMPLICIT NONE
   PRIVATE
-  PUBLIC :: simplesort, bubblesort, insertionsort, BoUpMergeSort, BoUpMerge, quicksort
+  PUBLIC :: simplesort, bubblesort, insertionsort, bumergesort, bumerge, hybridsort, quicksort
 CONTAINS
 
 !---------------------------------------------------------------------------
@@ -76,24 +76,26 @@ END SUBROUTINE insertionsort
 
 !---------------------------------------------------------------------------
 
-SUBROUTINE BoUpMergeSort(dat)
+SUBROUTINE bumergesort(dat, dim_chunk)
   REAL, DIMENSION(:), INTENT(inout) :: dat
+  INTEGER, OPTIONAL, INTENT(in) :: dim_chunk
   INTEGER :: left_start, mid, right_end, size_dat, curr_size
 
   size_dat = SIZE(dat,1)
 
   curr_size = 1
+  IF ( present(dim_chunk) ) curr_size = dim_chunk
   DO WHILE (curr_size <= size_dat - 1)
        DO left_start=0, size_dat - curr_size, 2*curr_size
            mid = left_start + curr_size - 1
            right_end = MIN(left_start + 2*curr_size - 1, size_dat - 1)
-          CALL  BoUpMerge(dat, left_start, mid, right_end, size_dat)
+          CALL  bumerge(dat, left_start, mid, right_end, size_dat)
        END DO
        curr_size = 2*curr_size
    END DO
-END SUBROUTINE BoUpMergeSort
+END SUBROUTINE bumergesort
 
-SUBROUTINE BoUpMerge(dat,l,m,r,size_dat)
+SUBROUTINE bumerge(dat,l,m,r,size_dat)
 
  INTEGER :: l, m, r, size_dat
  REAL, DIMENSION(0 : size_dat - 1), INTENT(in out) :: dat
@@ -135,7 +137,27 @@ SUBROUTINE BoUpMerge(dat,l,m,r,size_dat)
         j=j+1
         k=k+1
   end do
-end subroutine BoUpMerge
+end subroutine bumerge
+
+!---------------------------------------------------------------------------
+
+SUBROUTINE hybridsort(dat)
+    REAL, DIMENSION(:), INTENT(inout) :: dat
+    !INTEGER, OPTIONAL, INTENT(in) :: n_insert_opt
+    INTEGER :: dim_chunk = 32
+    INTEGER :: start_insert, end_insert, size_dat
+
+    size_dat = SIZE(dat)
+    !IF ( present(n_insert_opt) ) n_insert = n_insert_opt
+
+    DO start_insert = 1, size_dat - 1, dim_chunk
+      end_insert = min( start_insert + dim_chunk, size_dat)
+      CALL insertionsort( dat(start_insert : end_insert) )
+    END DO
+
+    CALL bumergesort(dat, dim_chunk)
+
+  END SUBROUTINE hybridsort
 
 !---------------------------------------------------------------------------
 
