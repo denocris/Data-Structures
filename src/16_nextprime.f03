@@ -1,7 +1,7 @@
 program NextPrimeProg
 IMPLICIT NONE
 
-integer :: num = 57
+integer :: num = 1031
 
 
 write(*,*) 'The integer number chosen is', num

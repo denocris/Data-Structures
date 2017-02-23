@@ -31,8 +31,8 @@ all: 01 02 03
 09: 09_simplesort.x
 	./09_simplesort.x
 
-10: 10_bublesort.x
-	./10_bublesort.x
+10: 10_bubblesort.x
+	./10_bubblesort.x
 
 11: 11_insertionsort.x
 	./11_insertionsort.x
@@ -71,7 +71,7 @@ all: 01 02 03
 09_simplesort.x: list_types.o list_tools.o sorting.o 09_simplesort.o
 	$(FC) $^ -o $@
 
-10_bublesort.x: list_types.o list_tools.o sorting.o 10_bublesort.o
+10_bubblesort.x: list_types.o list_tools.o sorting.o 10_bubblesort.o
 	$(FC) $^ -o $@
 
 11_insertionsort.x: list_types.o list_tools.o sorting.o 11_insertionsort.o

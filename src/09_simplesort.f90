@@ -37,7 +37,8 @@ PROGRAM real_sort
       !CALL simplesort(dat)
       !CALL bubblesort(dat)
       !CALL insertionsort(dat)
-      CALL BoUpMergeSort(dat)
+      !CALL BoUpMergeSort(dat)
+      CALL hybridsort(dat)
       !CALL quicksort(dat)
       CALL CPU_TIME(time2)
       WRITE(*,FMT=666) num, 'unsorted random', time2-time1
@@ -48,7 +49,8 @@ PROGRAM real_sort
       !CALL simplesort(dat)
       !CALL bubblesort(dat)
       !CALL insertionsort(dat)
-      CALL BoUpMergeSort(dat)
+      !CALL BoUpMergeSort(dat)
+      CALL hybridsort(dat)
       !CALL quicksort(dat)
       CALL CPU_TIME(time2)
       WRITE(*,FMT=666) num, 'already sorted', time2-time1
@@ -60,7 +62,8 @@ PROGRAM real_sort
       !CALL simplesort(dat)
       !CALL bubblesort(dat)
       !CALL insertionsort(dat)
-      CALL BoUpMergeSort(dat)
+      !CALL BoUpMergeSort(dat)
+      CALL hybridsort(dat)
       !CALL quicksort(dat)
       CALL CPU_TIME(time2)
       WRITE(*,FMT=666) num, 'mostly sorted', time2-time1
