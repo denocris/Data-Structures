@@ -34,14 +34,22 @@ PROGRAM real_sort
 
       ! call sort algorithm and measure the time spent on it.
       CALL CPU_TIME(time1)
-      CALL simplesort(dat)
+      !CALL simplesort(dat)
+      !CALL bubblesort(dat)
+      !CALL insertionsort(dat)
+      CALL BoUpMergeSort(dat)
+      !CALL quicksort(dat)
       CALL CPU_TIME(time2)
       WRITE(*,FMT=666) num, 'unsorted random', time2-time1
       if ( .NOT. is_sorted(num, dat, asc)) PRINT*, "Warning, the file is not sorted correctly!"
 
       ! call sort again on the already sorted data
       CALL CPU_TIME(time1)
-      CALL simplesort(dat)
+      !CALL simplesort(dat)
+      !CALL bubblesort(dat)
+      !CALL insertionsort(dat)
+      CALL BoUpMergeSort(dat)
+      !CALL quicksort(dat)
       CALL CPU_TIME(time2)
       WRITE(*,FMT=666) num, 'already sorted', time2-time1
       if ( .NOT. is_sorted(num, dat, asc)) PRINT*, "Warning, the file is not sorted correctly!"
@@ -49,7 +57,11 @@ PROGRAM real_sort
       ! swap a few elements of the sorted array and sort one more time
       CALL swap(dat,INT(LOG(REAL(num))))
       CALL CPU_TIME(time1)
-      CALL simplesort(dat)
+      !CALL simplesort(dat)
+      !CALL bubblesort(dat)
+      !CALL insertionsort(dat)
+      CALL BoUpMergeSort(dat)
+      !CALL quicksort(dat)
       CALL CPU_TIME(time2)
       WRITE(*,FMT=666) num, 'mostly sorted', time2-time1
       if ( .NOT. is_sorted(num, dat, asc)) PRINT*, "Warning, the file is not sorted correctly!"

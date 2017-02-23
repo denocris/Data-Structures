@@ -29,7 +29,7 @@ all: 01 02 03
 	for i in `seq 1 6 `; do ./08_multmodules.x < ../data/d3\_$$i.dat; done
 
 09: 09_simplesort.x
-		for i in `seq 1 6 `; do ./09_simplesort.x < ../data/d1\_$$i.dat; done
+	./09_simplesort.x
 
 01_readint.x: 01_readint.o
 	$(FC) $^ -o $@

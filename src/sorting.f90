@@ -1,8 +1,10 @@
 MODULE sorting
   IMPLICIT NONE
   PRIVATE
-  PUBLIC :: simplesort, quicksort
+  PUBLIC :: simplesort, bubblesort, insertionsort, BoUpMergeSort, BoUpMerge, quicksort
 CONTAINS
+
+!---------------------------------------------------------------------------
 
   ! pathetically bad sorting algorithm:
   ! loop over all unique pairs and swap the values
@@ -25,6 +27,117 @@ CONTAINS
         END DO
     END DO
   END SUBROUTINE simplesort
+
+!---------------------------------------------------------------------------
+
+  SUBROUTINE bubblesort(dat)
+    IMPLICIT NONE
+    REAL, DIMENSION(:), INTENT(inout) :: dat
+    INTEGER :: num, i, j
+    REAL :: temp
+    LOGICAL :: swapped
+
+    num = SIZE(dat,1)
+    IF (num < 2) RETURN
+    DO j = num -1, 1, -1
+      swapped = .FALSE.
+      DO i = 1, j
+        IF (dat(i) > dat(i+1)) THEN
+          temp = dat(i)
+          dat(i) = dat(i+1)
+          dat(i+1) = temp
+          swapped = .TRUE.
+        END IF
+      END DO
+      IF (.NOT. swapped) EXIT
+    END DO
+END SUBROUTINE bubblesort
+
+!---------------------------------------------------------------------------
+
+SUBROUTINE insertionsort(dat)
+  IMPLICIT NONE
+  REAL, DIMENSION(:), INTENT(inout) :: dat
+  REAL :: temp
+  INTEGER :: num, i, j
+
+  num = SIZE(dat,1)
+  IF (num < 2) RETURN
+  DO i = 2, num
+     j = i - 1
+     temp = dat(i)
+     DO WHILE (j>=1 .AND. dat(j)>temp)
+        dat(j+1) = dat(j)
+        j = j - 1
+     END DO
+     dat(j+1) = temp
+  END DO
+END SUBROUTINE insertionsort
+
+!---------------------------------------------------------------------------
+
+SUBROUTINE BoUpMergeSort(dat)
+  REAL, DIMENSION(:), INTENT(inout) :: dat
+  INTEGER :: left_start, mid, right_end, size_dat, curr_size
+
+  size_dat = SIZE(dat,1)
+
+  curr_size = 1
+  DO WHILE (curr_size <= size_dat - 1)
+       DO left_start=0, size_dat - curr_size, 2*curr_size
+           mid = left_start + curr_size - 1
+           right_end = MIN(left_start + 2*curr_size - 1, size_dat - 1)
+          CALL  BoUpMerge(dat, left_start, mid, right_end, size_dat)
+       END DO
+       curr_size = 2*curr_size
+   END DO
+END SUBROUTINE BoUpMergeSort
+
+SUBROUTINE BoUpMerge(dat,l,m,r,size_dat)
+
+ INTEGER :: l, m, r, size_dat
+ REAL, DIMENSION(0 : size_dat - 1), INTENT(in out) :: dat
+ INTEGER :: i, j ,k
+
+ REAL :: left(0 : m-l)
+ REAL :: right(0 : r - m - 1)
+
+    do i = 0, SIZE(left)-1
+        left(i) = dat(l + i)
+      end do
+
+    do j=0,SIZE(right)-1
+        right(j) = dat(m + 1+ j)
+      end do
+
+    i = 0
+    j = 0
+    k = l
+    do while (i < SIZE(left) .AND. j < SIZE(right))
+        if (left(i) <= right(j)) then
+            dat(k) = left(i)
+            i= i+1
+        else
+            dat(k) = right(j)
+            j=j+1
+        end if
+        k = k+1
+  end do
+
+  do while (i < SIZE(left))
+        dat(k) = left(i)
+        i = i + 1
+        k = k + 1
+  end do
+
+  do while (j < SIZE(right))
+        dat(k) = right(j)
+        j=j+1
+        k=k+1
+  end do
+end subroutine BoUpMerge
+
+!---------------------------------------------------------------------------
 
   ! quicksort implementation via recursion
   ! top-level takes whole array, recursions work on subsets.
@@ -71,7 +184,7 @@ CONTAINS
     ! this is the classic choice of pivot element, assuming random data
     pivot = dat(right)
     ! an element in the middle is a much better choice for presorted data
-    ! pivot = dat((left+right)/2)
+    pivot = dat((left+right)/2)
     i = left
     DO j=left,right-1
         IF (pivot > dat(j)) THEN
