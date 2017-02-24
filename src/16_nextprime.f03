@@ -1,7 +1,7 @@
 program NextPrimeProg
 IMPLICIT NONE
 
-integer :: num = 1031
+integer :: num = 2
 
 
 write(*,*) 'The integer number chosen is', num
@@ -18,10 +18,15 @@ subroutine nextprime(n)
   INTEGER :: i
 
 
-  if ( n == 1 ) then
+  if ( n == 0 ) then
+    n = 1
+    find = .true.
+  else if ( n == 1 ) then
     n = 2
+    find = .true.
   else if ( n == 2 ) then
     n = 3
+    find = .true.
   end if
 
 tmp_n = n
