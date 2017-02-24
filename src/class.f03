@@ -62,31 +62,45 @@ END MODULE nodes
 
 
 PROGRAM test_node
-  USE nodes
+  !USE nodes
+  USE list_types
   IMPLICIT NONE
-  TYPE(node),POINTER :: head,nn,ptr
-  TYPE(node), TARGET :: n !You need taget for use the pointer in fortran
+  TYPE(pair) :: p1, p2, p3
+  TYPE (LinkList), pointer :: llist
+  TYPE (LinkList), pointer :: tmp
+  TYPE (LinkList), pointer :: tmp2
   INTEGER :: i
 
-  ALLOCATE(head,nn)
-  head = node(1) !give the value 1 node_val
-  nn = node() !default
-  n = node() !default
-  ptr => n
-  CALL n%set(20) !20 is the value of n%val
-  CALL head%append(nn) !add nn in head
-  CALL head%append(ptr) !add ptr to head->nn->n(NULL)
+  ALLOCATE(llist)
 
-  PRINT*,'val=', head%get(), nn%get(), n%get()
+  p1 % key = 1
+  p1 % val = 0.1
+  p2 % key = 2
+  p2 % val = 0.2
+  p3 % key = 3
+  p3 % val = 0.3
 
-  ptr => head
+  call llist % add_llist(p1)
+  call llist % add_llist(p2)
+  call llist % add_llist(p3)
+
+
+  ! Eliminate the first block since no value inside
+    tmp2 => llist
+    llist => llist % next
+    deallocate(tmp2)
+    nullify(tmp2)
+
+  tmp => llist
+  !PRINT*,'val=', head%get(), nn%get(), n%get()
+
   i = 1
-  DO WHILE (ASSOCIATED(ptr)) !while pointer isn't null continue
-      PRINT*,i,' -> ',ptr%get()
-      ptr => ptr%next
+  DO WHILE (ASSOCIATED(tmp)) !while pointer isn't null continue
+      PRINT*,i,' -> ',tmp % val % key
+      tmp => tmp % next
       i = i+1
   END DO
 
-  DEALLOCATE(head,nn)
+  call dealloc(llist)
   PRINT*,'done'
 END PROGRAM test_node

@@ -46,6 +46,11 @@ all: 01 02 03
 14: 14_hybridsort.x
 	./14_hybridsort.x
 
+17: 17_array_lookup.x
+	for i in `seq 1 6 `; do ./17_array_lookup.x < ../data/d3\_$$i.dat; done
+
+class: class.x
+		./class.x
 
 01_readint.x: 01_readint.o
 	$(FC) $^ -o $@
@@ -86,9 +91,15 @@ all: 01 02 03
 14_hybridsort.x: list_types.o list_tools.o sorting.o 14_hybridsort.o
 	$(FC) $^ -o $@
 
+17_array_lookup.x: list_types.o list_tools.o sorting.o 17_array_lookup.o
+		$(FC) $^ -o $@
+
+class.x: list_types.o list_tools.o sorting.o class.o
+		$(FC) $^ -o $@
+
 
 %.o: %.f03
-	$(FC) -c $< $(FFLAGS) -o $@
+	$(FC) -c $< $(FFLAGS) -o $@  # metti @ all'inizio per togliere warning
 
 %.o: %.f90
 	$(FC) -c $< $(FFLAGS) -o $@
