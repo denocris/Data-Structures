@@ -49,6 +49,23 @@ IMPLICIT NONE
 
  end type StackArray
 
+ type StackList
+    private
+    type (LinkList), pointer :: StackLL
+    !type (LinkList), pointer :: StackLL => NULL()
+    integer :: length
+
+  contains
+
+    procedure :: stacklist_init
+    procedure :: stacklist_push
+    procedure :: stacklist_pop
+    procedure :: stacklist_length
+    procedure :: stacklist_free
+    procedure :: stacklist_copy
+
+ end type StackList
+
 CONTAINS
 
 
@@ -287,6 +304,92 @@ subroutine stackarray_free(self)
   deallocate(self % StackArr)
 
 end subroutine stackarray_free
+
+! --------------- Stack List ------------------------
+
+subroutine stacklist_init(self)
+  class (StackList), intent(inout) :: self
+
+  ALLOCATE(self % StackLL)
+  self % length = 0
+
+end subroutine stacklist_init
+
+
+subroutine stacklist_copy(self, stack_old)
+  class (StackList), intent(inout) :: self
+  type(StackList), intent(in) :: stack_old
+  type(LinkList), pointer :: point, new_cell
+
+    ALLOCATE(self % StackLL)
+    self % length = 0
+    point => stack_old % StackLL
+    new_cell => self % StackLL
+
+  do while (ASSOCIATED(point % next))
+      self % length = self % length + 1
+      new_cell % val = point % val
+      ALLOCATE(new_cell % next)
+      new_cell => new_cell % next
+      point => point % next
+  end do
+end subroutine stacklist_copy
+
+integer function stacklist_length(self) result(l)
+  class (StackList), intent(in) :: self
+
+  l = self % length
+
+end function stacklist_length
+
+subroutine stacklist_push(self,n)
+  class(StackList), intent(inout) :: self
+  class(LinkList), pointer :: new_cell
+  integer, intent(in) :: n
+
+
+  allocate(new_cell)
+  new_cell % val % key = n
+  new_cell % next => self % StackLL
+  self % StackLL => new_cell
+  self %length = self % length + 1
+
+end  subroutine stacklist_push
+
+function stacklist_pop(self) RESULT(n)
+  class(StackList), intent(inout) :: self
+  type(LinkList), pointer :: point
+  integer :: n
+  n = -1
+
+  if (self % length > 0) then
+      point => self % StackLL % next
+      n = self % StackLL % val % key
+
+      deallocate(self % StackLL)
+
+      self % StackLL => point
+      self % length = self % length - 1
+  end if
+END FUNCTION stacklist_pop
+
+subroutine stacklist_free(self)
+  class(StackList), intent(inout) :: self
+  type(LinkList), pointer :: point
+
+  do while (self % length > 0)
+      point => self % StackLL % next
+
+      deallocate(self % StackLL)
+
+      self % StackLL => point
+      self % length = self % length - 1
+  end do
+
+  deallocate(self % StackLL)
+
+end subroutine stacklist_free
+
 
 
 

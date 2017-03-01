@@ -55,6 +55,9 @@ all: 01 02 03
 19: 19_stack_array.x
 	./19_stack_array.x
 
+20: 20_stack_list.x
+	./20_stack_list.x
+
 
 class: class.x
 		./class.x
@@ -105,6 +108,9 @@ class: class.x
 	$(FC) $^ -o $@
 
 19_stack_array.x: list_types.o 19_stack_array.o
+	$(FC) $^ -o $@
+
+20_stack_list.x: list_types.o 20_stack_list.o
 	$(FC) $^ -o $@
 
 class.x: list_types.o list_tools.o sorting.o class.o
