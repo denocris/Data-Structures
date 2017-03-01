@@ -46,8 +46,15 @@ all: 01 02 03
 14: 14_hybridsort.x
 	./14_hybridsort.x
 
-17: 17_array_lookup.x
-	for i in `seq 1 6 `; do ./17_array_lookup.x < ../data/d3\_$$i.dat; done
+17: 17_linked_list.x
+	for i in `seq 1 6 `; do ./17_linked_list.x < ../data/d3\_$$i.dat; done
+
+18: 18_hash_table.x
+	for i in `seq 1 6 `; do ./18_hash_table.x < ../data/d3\_$$i.dat; done
+
+19: 19_stack_array.x
+	./19_stack_array.x
+
 
 class: class.x
 		./class.x
@@ -91,8 +98,14 @@ class: class.x
 14_hybridsort.x: list_types.o list_tools.o sorting.o 14_hybridsort.o
 	$(FC) $^ -o $@
 
-17_array_lookup.x: list_types.o list_tools.o sorting.o 17_array_lookup.o
-		$(FC) $^ -o $@
+17_linked_list.x: list_types.o list_tools.o sorting.o 17_linked_list.o
+	$(FC) $^ -o $@
+
+18_hash_table.x: list_types.o list_tools.o sorting.o 18_hash_table.o
+	$(FC) $^ -o $@
+
+19_stack_array.x: list_types.o 19_stack_array.o
+	$(FC) $^ -o $@
 
 class.x: list_types.o list_tools.o sorting.o class.o
 		$(FC) $^ -o $@

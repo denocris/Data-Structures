@@ -1,6 +1,9 @@
 MODULE list_types
 IMPLICIT NONE
 
+!INTEGER, PARAMETER :: size = 8
+
+
   type pair
     INTEGER :: key
     REAL :: val
@@ -15,8 +18,42 @@ IMPLICIT NONE
      PROCEDURE :: dealloc
   end type LinkList
 
+  type HashTable
+   private
+   TYPE (LinkList), ALLOCATABLE, DIMENSION(:) :: llist_bucket
+   INTEGER :: num_buckets
+
+  contains
+   PROCEDURE :: hashtable_init
+   PROCEDURE :: hashtable_function
+   PROCEDURE :: hashtable_add_list
+   PROCEDURE :: hashtable_find
+   PROCEDURE :: hashtable_dealloc
+
+ end type HashTable
+
+ type StackArray
+    private
+    integer, allocatable, dimension(:) :: StackArr
+    integer :: length
+    integer :: index
+
+  contains
+
+    procedure :: stackarray_init
+    procedure :: stackarray_push
+    procedure :: stackarray_pop
+    procedure :: stackarray_length
+    procedure :: stackarray_free
+    procedure :: stackarray_copy
+
+ end type StackArray
+
 CONTAINS
 
+
+
+  !-------------- Linked List -----------------------
 
   subroutine add_llist(self, item)
     class(LinkList), intent(inout), target :: self
@@ -24,7 +61,7 @@ CONTAINS
     type (LinkList), pointer :: tmp
     type (LinkList), pointer :: new_cell
 
-    tmp => self ! ????????????
+    tmp => self ! In llist % add_lllist, tmp points to llist
 
     do while (associated(tmp % next))
        tmp => tmp % next
@@ -37,7 +74,7 @@ CONTAINS
 
   end subroutine add_llist
 
-  type(pair) function find(self, mykey) result(pair_ret)
+  type(pair) function find(self, mykey) result(mypair)
     class (LinkList), intent(in), target :: self
     integer, intent(in) :: mykey
     type (LinkList), pointer :: tmp
@@ -47,7 +84,7 @@ CONTAINS
     do while(mykey /= tmp % val % key)
        tmp => tmp % next
     end do
-    pair_ret = tmp % val
+    mypair = tmp % val
   end function find
 
   recursive subroutine dealloc(self)
@@ -66,6 +103,190 @@ CONTAINS
     end if
   end subroutine dealloc
 
+! --------------- Hash Table -----------------------
+
+subroutine nextprime(n)
+  INTEGER, INTENT(inout) :: n
+  INTEGER :: tmp_n
+  LOGICAL :: find = .false.
+  INTEGER :: i
+
+  if ( n == 0 ) then
+    n = 1
+    find = .true.
+  else if ( n == 1 ) then
+    n = 2
+    find = .true.
+  else if ( n == 2 ) then
+    n = 3
+    find = .true.
+  else if ( n == 3 ) then
+    n = 5
+    find = .true.
+  end if
+
+tmp_n = n
+
+do while ( .NOT. find )
+
+  i = 2
+  do while ( i < tmp_n/2 )
+      if (mod(tmp_n,i) == 0) then
+        exit
+      end if
+    i=i+1
+  end do
+
+  if ( i == tmp_n/2 .AND. n /= tmp_n ) then
+    find = .true.
+    exit
+  end if
+
+  if (find) then
+    exit
+  else
+    tmp_n = tmp_n + 1
+  end if
+end do
+
+n = tmp_n
+
+find = .false.
+
+end subroutine nextprime
+
+
+subroutine hashtable_init(self, n)
+  class (HashTable), intent(inout) :: self
+  integer, intent(inout) :: n
+  integer :: nextpr
+
+  CALL nextprime(n)
+
+  nextpr = n
+
+  self % num_buckets = nextpr
+
+  allocate(self % llist_bucket(nextpr))
+end subroutine hashtable_init
+
+! Define hash fucntion via next prime
+integer function hashtable_function(self, mykey) result(hfunc)
+  class (HashTable), intent(in) :: self
+  integer, intent(in) :: mykey
+
+  hfunc = mod(mykey, self % num_buckets) + 1
+end function hashtable_function
+
+! Add new list to the hash table
+subroutine hashtable_add_list(self, item)
+  class (HashTable), intent(inout) :: self
+  type (pair), intent(in) :: item
+  integer :: index
+
+  index = self % hashtable_function(item % key)
+
+  call self % llist_bucket(index) % add_llist(item)
+end subroutine hashtable_add_list
+
+! Find the correct pair
+type (pair) function hashtable_find(self, mykey) result(mypair)
+  class (HashTable), intent(in) :: self
+  integer, intent(in) :: mykey
+  integer :: index
+
+  index = self % hashtable_function(mykey)
+  mypair = self % llist_bucket(index) % find(mykey)
+end function hashtable_find
+
+! Deallocate hash table
+subroutine hashtable_dealloc(self)
+  class (HashTable), intent(inout) :: self
+  integer :: i
+
+  do i = 1, self % num_buckets
+    call self % llist_bucket(i) % dealloc()
+  end do
+end subroutine hashtable_dealloc
+
+! --------------- Stack Array ------------------------
+
+subroutine stackarray_init(self, size)
+  class (StackArray), intent(inout) :: self
+  integer, intent(inout) :: size
+  self % length = size
+
+  ALLOCATE(self % StackArr(self % length))
+  self % index = 0
+
+end subroutine stackarray_init
+
+
+subroutine stackarray_copy(self, stack_old, size)
+  class (StackArray), intent(inout) :: self
+  integer, intent(inout) :: size
+  type(StackArray), intent(in) :: stack_old
+  !type(StackArray) :: self
+
+  self % length = stack_old % index
+
+  if (self % length <  size) then
+    self % length = size
+  end if
+
+  ALLOCATE(self % StackArr(self % length))
+  self % StackArr(:) = stack_old % StackArr(1: stack_old % index)
+  self % index = stack_old % index
+
+end subroutine stackarray_copy
+
+integer function stackarray_length(self) result(l)
+  class (StackArray), intent(in) :: self
+
+  l = self % index - 1
+
+end function stackarray_length
+
+
+subroutine stackarray_push(self,n)
+  class(StackArray), intent(inout) :: self
+  integer, dimension(:), allocatable :: tmp
+  integer, intent(in) :: n
+  integer :: j
+
+  if(self % index > self % length) then
+
+     allocate(tmp(self % length + 10))
+
+     do j=1, self % length
+        tmp(j) = self % StackArr(j)
+     end do
+
+     deallocate(self % StackArr)
+     self % StackArr = tmp
+     self % length = self % length + 10
+  endif
+
+  self % StackArr(self % index) = n
+  self % index = self % index + 1
+end  subroutine stackarray_push
+
+
+integer function stackarray_pop(self) result(th)
+  class (StackArray), intent(inout) :: self
+
+  self % index = self % index - 1
+  th = self % StackArr(self % index)
+
+end function stackarray_pop
+
+
+subroutine stackarray_free(self)
+  class (StackArray), intent(inout) :: self
+
+  deallocate(self % StackArr)
+
+end subroutine stackarray_free
 
 
 
