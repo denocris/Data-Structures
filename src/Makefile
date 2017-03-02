@@ -58,6 +58,10 @@ all: 01 02 03
 20: 20_stack_list.x
 	./20_stack_list.x
 
+21: 21_binary_tree.x
+	#for i in `seq 1 6 `; do ./18_hash_table.x < ../data/d3\_$$i.dat; done
+	./21_binary_tree.x < ../data/d3_1.dat
+
 
 class: class.x
 		./class.x
@@ -112,6 +116,10 @@ class: class.x
 
 20_stack_list.x: list_types.o 20_stack_list.o
 	$(FC) $^ -o $@
+
+21_binary_tree.o: bintree_tools.o
+21_binary_tree.x: list_types.o bintree_tools.o 21_binary_tree.o
+		$(FC) $^ -o $@
 
 class.x: list_types.o list_tools.o sorting.o class.o
 		$(FC) $^ -o $@
