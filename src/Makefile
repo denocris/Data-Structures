@@ -117,7 +117,6 @@ class: class.x
 20_stack_list.x: list_types.o 20_stack_list.o
 	$(FC) $^ -o $@
 
-21_binary_tree.o: bintree_tools.o
 21_binary_tree.x: list_types.o bintree_tools.o 21_binary_tree.o
 		$(FC) $^ -o $@
 
