@@ -1,4 +1,6 @@
 
+I apologize for the sort report. It contains just the necessary data and results.
+
 #####Sorting algorithms
 
 All the sorting algorithms were run on Ulysses cluster. Everything has been tested on three different cases: unsorted, sorted and mostly sorted data. The sizes of the array were: 2000, 5000, 10000, 20000, 50000, 100000, 200000.
@@ -14,6 +16,7 @@ In fig.2 the bubble sorting is not reported since too slow compared with respect
 
 ![Figure_3](not_sorted.png)
 
+I was expecting the growth of time a little bit different (sometimes it seems linear). I think that probably the sizes chosen for the arrays were not appropriate for a proper time measure. 
 
 ####Perf analisys
 
@@ -45,58 +48,4 @@ data 5 |0.650000 ms| 1.370000 ms | 0.146000 ms  | 0.323000 ms |  0.347000 ms |
 data 6 |1.682000 ms| 1.367000 ms | 0.132000 ms | 0.414000 ms |  0.394000 ms |
 
 
-Timing for the array:
-
-data 1    1.682000 ms
-data 2    0.372000 ms
-data 3    0.924000 ms
-data 4    1.697000 ms
-data 5    0.650000 ms
-data 6    0.664000 ms
-
-
-Timing for the linked list:
-
-data 1    3.428000 ms
-
-data 2    0.761000 ms
-
-data 3    1.844000 ms
-
-data 4    4.267000 ms
-
-data 5    1.370000 ms
-
-data 6    1.367000 ms
-
-Timing for the hash table (num_buckets = 150):
-
-Performing    5000   hash table lookups took:    0.170000 ms
-Performing    5000   hash table lookups took:    0.072000 ms
-Performing    5000   hash table lookups took:    0.123000 ms
-
-
-Performing    5000   hash table lookups took:    0.160000 ms
-Performing    5000   hash table lookups took:    0.146000 ms
-Performing    5000   hash table lookups took:    0.132000 ms
-
-Timing for the binary tree:
-
- Performing    5000  Binary Tree lookups took:    8.868000 ms
- Performing    5000  Binary Tree lookups took:    1.855000 ms
- Performing    5000  Binary Tree lookups took:    3.837001 ms
-
- Performing    5000  Binary Tree lookups took:    8.723001 ms
- Performing    5000  Binary Tree lookups took:    0.323000 ms
- Performing    5000  Binary Tree lookups took:    0.414000 ms
-
-Timing for the rebalanced binary tree:
-
-Performing    5000 Rebalanced Tree look took:    0.370000 ms
-Performing    5000 Rebalanced Tree look took:    0.302000 ms
-
-Performing    5000 Rebalanced Tree look took:    0.318000 ms
-
-Performing    5000 Rebalanced Tree look took:    0.506001 ms
-Performing    5000 Rebalanced Tree look took:    0.347000 ms
-Performing    5000 Rebalanced Tree look took:    0.394000 ms
+As expected the rebalanced binary tree is the fastest. However very good performances can be achieved if the number of buckets of the hast table is more or less equal to nlook.
