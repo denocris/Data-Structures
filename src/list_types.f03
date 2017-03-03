@@ -273,7 +273,7 @@ subroutine stackarray_push(self,n)
 
   if(self % index > self % length) then
 
-     allocate(tmp(self % length + 10))
+     allocate(tmp(self % length + 8))
 
      do j=1, self % length
         tmp(j) = self % StackArr(j)
@@ -281,11 +281,11 @@ subroutine stackarray_push(self,n)
 
      deallocate(self % StackArr)
      self % StackArr = tmp
-     self % length = self % length + 10
+     self % length = self % length + 8
   endif
 
-  self % StackArr(self % index) = n
   self % index = self % index + 1
+  self % StackArr(self % index) = n
 end  subroutine stackarray_push
 
 
