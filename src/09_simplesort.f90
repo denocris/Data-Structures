@@ -7,8 +7,16 @@ PROGRAM real_sort
   INTEGER :: num, i, n
   REAL,ALLOCATABLE,DIMENSION(:) :: dat
   REAL :: time1, time2, rv
-  INTEGER,PARAMETER,DIMENSION(9) :: sizes = (/ &
+  INTEGER,PARAMETER,DIMENSION(7) :: sizes = (/ &
       2000,5000,10000,20000,50000,100000,200000 /)
+
+      ! INTERFACE
+      !     SUBROUTINE swap(dat,count)
+      !       IMPLICIT NONE
+      !       REAL, DIMENSION(:),INTENT(inout) :: dat
+      !       INTEGER, INTENT(in) :: count
+      !     END SUBROUTINE swap
+      ! END INTERFACE
 
   ! initialize pseudo random number generator
   CALL RANDOM_SEED()
