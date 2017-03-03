@@ -83,6 +83,8 @@ all: 01 02 03
 class: class.x
 		./class.x
 
+list_tools.o: list_tools.f03 list_types.o
+
 01_readint.x: 01_readint.o
 	$(FC) $^ -o $@
 
