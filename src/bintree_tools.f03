@@ -13,9 +13,9 @@ module BinaryTree
     procedure :: add_node
     procedure :: free_nodes
     procedure :: search_nodes
-    !procedure :: find_depth
-    !procedure :: leafs_enum
-    !procedure :: get_all_nodes
+    procedure :: find_tree_depth
+    procedure :: leafs_enum
+    procedure :: get_all_nodes
   end type Node
 
   type BinTree
@@ -28,9 +28,8 @@ module BinaryTree
    procedure :: free_bintree
    procedure :: get_num_nodes
    procedure :: search_bintree
-   !procedure :: print_tree_depth
-   !procedure :: print_nleafs
-   !procedure :: extract_sorted_array
+   procedure :: print_depth_and_nleafs
+   procedure :: extract_sorted_array
  end type BinTree
 
 
@@ -145,5 +144,88 @@ type (pair) recursive function search_nodes(self, n) result(ret)
 
 end function search_nodes
 
+! --------------------------------------------------------
+! --------------------------------------------------------
+! --------------------------------------------------------
+
+subroutine print_depth_and_nleafs(self)
+  class (BinTree), intent(in) :: self
+  integer :: depth
+    integer :: num_leafs
+  depth = 1
+  call self % root_node % find_tree_depth(depth)
+  print*,"The depth of the tree is ", depth
+  num_leafs = 0
+  call self % root_node % leafs_enum(num_leafs)
+  print*,"The number of the leafs is ", num_leafs
+end subroutine print_depth_and_nleafs
+
+
+recursive subroutine find_tree_depth(self, depth)
+  class (node), intent(in) :: self
+  integer, intent(inout) :: depth
+
+  if(self % node_depth > depth) then
+     depth = self % node_depth
+  end if
+
+  if(associated(self % left)) then
+     call self % left % find_tree_depth(depth)
+  end if
+  if(associated(self % right)) then
+     call self % right % find_tree_depth(depth)
+  end if
+
+end subroutine find_tree_depth
+
+
+recursive subroutine leafs_enum(self, num_leafs)
+  class (Node), intent(in) :: self
+  integer, intent(inout) :: num_leafs
+
+  if(associated(self % left)) then
+     call self % left % leafs_enum(num_leafs)
+     if(.not. associated(self % right)) then
+        num_leafs = num_leafs + 1
+     end if
+  end if
+
+  if(associated(self % right)) then
+     call self % right % leafs_enum(num_leafs)
+     if(.not. associated(self % left)) then
+        num_leafs = num_leafs + 1
+     end if
+  end if
+
+end subroutine leafs_enum
+
+
+subroutine extract_sorted_array(self, array)
+  class (BinTree), intent(in) :: self
+  type (pair), dimension(:), intent(inout) :: array
+  integer :: index
+
+  index = 1
+  call self % root_node % get_all_nodes(array, index)
+
+end subroutine extract_sorted_array
+
+recursive subroutine get_all_nodes(self, array, index)
+  class (Node), intent(in) :: self
+  type(pair), dimension(:), intent(inout) :: array
+  integer, intent(inout) :: index
+
+  if(associated(self % left)) then
+     call self % left % get_all_nodes(array, index)
+  end if
+
+  array(index) = self % value
+  index = index + 1
+
+  if(associated(self % right)) then
+     call self % right % get_all_nodes(array, index)
+  end if
+
+end subroutine get_all_nodes
 
 end module BinaryTree

@@ -1,4 +1,4 @@
-PROGRAM stack_integer
+PROGRAM stack_array
   use list_types
 
   type (StackArray), pointer :: Stack1
@@ -25,7 +25,6 @@ PROGRAM stack_integer
 
   print*, "size 1: ", Stack1 % stackarray_length()
   print*, "size 2: ", Stack2 % stackarray_length()
-  ! clean StackArrays
 
   do while(Stack1 % stackarray_length() > 0)
       print*, 'Pop from 1:', Stack1 % stackarray_pop()
@@ -43,4 +42,4 @@ PROGRAM stack_integer
   deallocate(Stack2)
 
 
-END PROGRAM stack_integer
+END PROGRAM stack_array

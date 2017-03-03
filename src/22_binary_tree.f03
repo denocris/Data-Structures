@@ -47,6 +47,9 @@ PROGRAM TreeTest
      call BTree % add_bintree(dat(i))
   end do
 
+  call BTree % print_depth_and_nleafs()
+
+
   CALL CPU_TIME(time1)
   DO i=1,nlook
      ! XXX do linked list or hash table lookups here
@@ -56,6 +59,9 @@ PROGRAM TreeTest
   WRITE(*,FMT=666) nlook, 'Binary Tree lookups', (time2-time1)*1000.0
 
   allocate(to_extract(num))
+
+  call BTree % extract_sorted_array(to_extract)
+  !print*,to_extract
 
   call BTree % free_bintree()
 

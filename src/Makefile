@@ -62,6 +62,10 @@ all: 01 02 03
 	#for i in `seq 1 6 `; do ./18_hash_table.x < ../data/d3\_$$i.dat; done
 	./21_binary_tree.x < ../data/d3_1.dat
 
+22: 22_binary_tree.x
+	#for i in `seq 1 6 `; do ./18_hash_table.x < ../data/d3\_$$i.dat; done
+	./22_binary_tree.x < ../data/d3_1.dat
+
 
 class: class.x
 		./class.x
@@ -118,6 +122,9 @@ class: class.x
 	$(FC) $^ -o $@
 
 21_binary_tree.x: list_types.o bintree_tools.o 21_binary_tree.o
+		$(FC) $^ -o $@
+
+22_binary_tree.x: list_types.o bintree_tools.o 22_binary_tree.o
 		$(FC) $^ -o $@
 
 class.x: list_types.o list_tools.o sorting.o class.o
