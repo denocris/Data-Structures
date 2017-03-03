@@ -35,30 +35,47 @@ The general behaviour is that the slowest cases are the simple, bubble and inser
 
 #####Data Structure
 
+-------| array | linked list | hash table | binary tree |  reb binary tree |
+-------|--------|--------|-----------|-------------|-------------|--------|
+data 1 |1.682000 ms | 3.428000 ms | 0.170000 ms  | 8.868000 ms  |  0.370000 ms |
+data 2 |0.372000 ms| 0.761000 ms | 0.072000 ms  | 1.855000 ms |  0.302000 ms |
+data 3 |0.924000 ms| 1.844000 ms | 0.123000 ms  | 3.837001 ms |  0.318000 ms |
+data 4 |1.697000 ms| 4.267000 ms | 0.160000 ms  | 8.723001 ms |  0.506001 ms |
+data 5 |0.650000 ms| 1.370000 ms | 0.146000 ms  | 0.323000 ms |  0.347000 ms |
+data 6 |1.682000 ms| 1.367000 ms | 0.132000 ms | 0.414000 ms |  0.394000 ms |
+
+
 Timing for the array:
-"""
-Performing    5000  array value lookups took:    1.682000 ms
-Performing    5000  array value lookups took:    0.372000 ms
-Performing    5000  array value lookups took:    0.924000 ms
-Performing    5000  array value lookups took:    1.697000 ms
-Performing    5000  array value lookups took:    0.650000 ms
-Performing    5000  array value lookups took:    0.664000 ms
-"""
+
+data 1    1.682000 ms
+data 2    0.372000 ms
+data 3    0.924000 ms
+data 4    1.697000 ms
+data 5    0.650000 ms
+data 6    0.664000 ms
+
 
 Timing for the linked list:
 
-Performing    5000  linked list lookups took:    3.428000 ms
-Performing    5000  linked list lookups took:    0.761000 ms
-Performing    5000  linked list lookups took:    1.844000 ms
-Performing    5000  linked list lookups took:    4.267000 ms
-Performing    5000  linked list lookups took:    1.370000 ms
-Performing    5000  linked list lookups took:    1.367000 ms
+data 1    3.428000 ms
+
+data 2    0.761000 ms
+
+data 3    1.844000 ms
+
+data 4    4.267000 ms
+
+data 5    1.370000 ms
+
+data 6    1.367000 ms
 
 Timing for the hash table (num_buckets = 150):
 
 Performing    5000   hash table lookups took:    0.170000 ms
 Performing    5000   hash table lookups took:    0.072000 ms
 Performing    5000   hash table lookups took:    0.123000 ms
+
+
 Performing    5000   hash table lookups took:    0.160000 ms
 Performing    5000   hash table lookups took:    0.146000 ms
 Performing    5000   hash table lookups took:    0.132000 ms
@@ -68,6 +85,7 @@ Timing for the binary tree:
  Performing    5000  Binary Tree lookups took:    8.868000 ms
  Performing    5000  Binary Tree lookups took:    1.855000 ms
  Performing    5000  Binary Tree lookups took:    3.837001 ms
+
  Performing    5000  Binary Tree lookups took:    8.723001 ms
  Performing    5000  Binary Tree lookups took:    0.323000 ms
  Performing    5000  Binary Tree lookups took:    0.414000 ms
@@ -76,7 +94,9 @@ Timing for the rebalanced binary tree:
 
 Performing    5000 Rebalanced Tree look took:    0.370000 ms
 Performing    5000 Rebalanced Tree look took:    0.302000 ms
+
 Performing    5000 Rebalanced Tree look took:    0.318000 ms
+
 Performing    5000 Rebalanced Tree look took:    0.506001 ms
 Performing    5000 Rebalanced Tree look took:    0.347000 ms
 Performing    5000 Rebalanced Tree look took:    0.394000 ms
