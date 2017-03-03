@@ -260,7 +260,7 @@ end subroutine stackarray_copy
 integer function stackarray_length(self) result(l)
   class (StackArray), intent(in) :: self
 
-  l = self % index - 1
+  l = self % index 
 
 end function stackarray_length
 
@@ -292,8 +292,8 @@ end  subroutine stackarray_push
 integer function stackarray_pop(self) result(th)
   class (StackArray), intent(inout) :: self
 
-  self % index = self % index - 1
   th = self % StackArr(self % index)
+  self % index = self % index - 1
 
 end function stackarray_pop
 

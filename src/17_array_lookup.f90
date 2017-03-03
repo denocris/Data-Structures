@@ -42,17 +42,20 @@ PROGRAM array_lookup
       idx(i) = dat(j)%key
   END DO
 
+
   CALL CPU_TIME(time1)
-  DO i=1,nlook
-      DO j=1,num
-          IF (dat(j)%key == idx(i)) THEN
-              p = dat(j)
-              EXIT
-          END IF
-      END DO
-  END DO
-  CALL CPU_TIME(time2)
-  WRITE(*,FMT=666) nlook, 'array value lookups', (time2-time1)*1000.0
+    DO i=1,nlook
+        DO j=1,num
+            IF (dat(j)%key == idx(i)) THEN
+                p = dat(j)
+                EXIT
+            END IF
+        END DO
+    END DO
+    CALL CPU_TIME(time2)
+    WRITE(*,FMT=666) nlook, 'array value lookups', (time2-time1)*1000.0
+
+  if (p%key > 0.5) call cpu_time(p%val)
 
   CALL CPU_TIME(time1)
   DO i=1,nlook
@@ -65,7 +68,7 @@ PROGRAM array_lookup
   ! free all allocated data
   DEALLOCATE(dat,idx)
   CALL llist % dealloc()
-  CALL dealloc(llist)
+  deallocate(llist)
   nullify(llist)
 
 666 FORMAT (' Performing',I8,1X,A20,1X,'took:',F12.6,' ms')

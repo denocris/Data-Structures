@@ -38,16 +38,17 @@ PROGRAM array_lookup
   END DO
 
   CALL CPU_TIME(time1)
-  DO i=1,nlook
-      DO j=1,num
-          IF (dat(j)%key == idx(i)) THEN
-              p = dat(j)
-              EXIT
-          END IF
-      END DO
-  END DO
-  CALL CPU_TIME(time2)
-  WRITE(*,FMT=666) nlook, 'array value lookups', (time2-time1)*1000.0
+    DO i=1,nlook
+        DO j=1,num
+            IF (dat(j)%key == idx(i)) THEN
+                p = dat(j)
+                EXIT
+            END IF
+        END DO
+    END DO
+    CALL CPU_TIME(time2)
+    WRITE(*,FMT=666) nlook, 'array value lookups', (time2-time1)*1000.0
+    if (p%key > 1.7) call cpu_time(p%val)
 
   CALL CPU_TIME(time1)
   DO i=1,nlook
