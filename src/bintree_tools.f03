@@ -124,29 +124,29 @@ type (pair) function search_bintree(self, key_to_find) result(ret)
 end function search_bintree
 
 
-type (pair) recursive function search_nodes(self, n) result(ret)
+type (pair) recursive function search_nodes(self, keytofind) result(ret)
   class (Node), intent(in) :: self
-  integer, intent(in) :: n
+  integer, intent(in) :: keytofind
 
-  if(n == self % value % key) then
+  if(keytofind == self % value % key) then
      ret % val = self % value % val
      ret % key = self % value % key
 
-  else if(n < self % value % key) then
+  else if(keytofind < self % value % key) then
      if(associated(self % left)) then
-        ret = self % left % search_nodes(n)
+        ret = self % left % search_nodes(keytofind)
      end if
   else
      if(associated(self % right)) then
-        ret = self % right % search_nodes(n)
+        ret = self % right % search_nodes(keytofind)
      end if
   end if
 
 end function search_nodes
 
-! --------------------------------------------------------
-! --------------------------------------------------------
-! --------------------------------------------------------
+!------------------------------------------------------------
+!--------------------- New Tools -----------------------
+!------------------------------------------------------------
 
 subroutine print_depth_and_nleafs(self)
   class (BinTree), intent(in) :: self
@@ -227,5 +227,74 @@ recursive subroutine get_all_nodes(self, array, index)
   end if
 
 end subroutine get_all_nodes
+
+
+!------------------------------------------------------------
+!--------------------- Rebalance -----------------------
+!------------------------------------------------------------
+
+
+type (BinTree) function rebalance_bintree(old_tree) result(reb_tree)
+    type (BinTree), intent(in) :: old_tree
+    type (pair), dimension(:), pointer :: dat
+    integer :: num, mid, start, end
+    logical :: fcall
+
+    num = old_tree % get_num_nodes()
+    allocate(dat(num))
+
+    call old_tree % extract_sorted_array(dat)
+
+    if(num > 1) then
+
+       start = 1
+       mid = (num + start)/2
+       end = num + 1
+       fcall = .true.
+
+       call rebalance_add(reb_tree, dat, mid, start, end, fcall)
+
+    else if (num == 1) then
+       reb_tree = bintree_init(dat(num))
+    else
+       return
+    end if
+
+    deallocate(dat)
+  end function rebalance_bintree
+
+
+  recursive subroutine rebalance_add(new_tree, array, index, start, end, fcall)
+  type (BinTree), intent(inout) :: new_tree
+  integer, intent(in) :: index
+  integer, intent(in) :: start
+  integer, intent(in) :: end
+  type (pair), dimension(:), intent(in) :: array
+  logical, intent(inout) :: fcall
+  integer :: midpoint_left, midpoint_right, first_end, sec_start
+
+  if (fcall .eqv. .true.) then
+     new_tree = bintree_init(array(index))
+     fcall = .false.
+  else
+     call new_tree % add_bintree(array(index))
+  end if
+
+  if(index > start .and. index < end) then
+     first_end = index
+     sec_start = index+1
+
+     midpoint_left = (index + start) / 2
+     midpoint_right = (end + index + 1) / 2
+
+     call rebalance_add(new_tree, array, midpoint_left, start, first_end, fcall)
+
+     if(midpoint_right /= end) then
+        call rebalance_add(new_tree, array, midpoint_right, sec_start, end, fcall)
+     end if
+
+  end if
+
+end subroutine rebalance_add
 
 end module BinaryTree
