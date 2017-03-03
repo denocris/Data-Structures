@@ -66,7 +66,7 @@ all: 01 02 03
 
 23: 23_reb_binary_tree.x
 	#for i in `seq 1 6 `; do ./23_reb_binary_tree.x < ../data/d3\_$$i.dat; done
-	valgrind ./23_reb_binary_tree.x < ../data/d3_1.dat
+	for i in `seq 1 6 `; do valgrind ./23_reb_binary_tree.x < ../data/d3\_$$i.dat; done
 
 class: class.x
 		./class.x
