@@ -29,8 +29,8 @@ all: 01 02 03
 	for i in `seq 1 6 `; do ./08_multmodules.x < ../data/d3\_$$i.dat; done
 
 09: 09_simplesort.x
-	#./09_simplesort.x
-	perf stat -B -e cache-references,cache-misses,cycles,instructions,branches,faults,migrations ./09_simplesort.x
+	./09_simplesort.x
+	#perf stat -B -e cache-references,cache-misses,cycles,instructions,branches,faults,migrations ./09_simplesort.x
 
 10: 10_bubblesort.x
 	#./10_bubblesort.x

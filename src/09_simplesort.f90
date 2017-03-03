@@ -8,15 +8,7 @@ PROGRAM real_sort
   REAL,ALLOCATABLE,DIMENSION(:) :: dat
   REAL :: time1, time2, rv
   INTEGER,PARAMETER,DIMENSION(9) :: sizes = (/ &
-      500,1000,2000,5000,10000,20000,50000,100000,200000 /)
-
-      ! INTERFACE
-      !     SUBROUTINE swap(dat,count)
-      !       IMPLICIT NONE
-      !       REAL, DIMENSION(:),INTENT(inout) :: dat
-      !       INTEGER, INTENT(in) :: count
-      !     END SUBROUTINE swap
-      ! END INTERFACE
+      2000,5000,10000,20000,50000,100000,200000 /)
 
   ! initialize pseudo random number generator
   CALL RANDOM_SEED()
@@ -34,24 +26,14 @@ PROGRAM real_sort
 
       ! call sort algorithm and measure the time spent on it.
       CALL CPU_TIME(time1)
-      !CALL simplesort(dat)
-      !CALL bubblesort(dat)
-      !CALL insertionsort(dat)
-      !CALL BoUpMergeSort(dat)
-      CALL hybridsort(dat)
-      !CALL quicksort(dat)
+      CALL simplesort(dat)
       CALL CPU_TIME(time2)
       WRITE(*,FMT=666) num, 'unsorted random', time2-time1
       if ( .NOT. is_sorted(num, dat, asc)) PRINT*, "Warning, the file is not sorted correctly!"
 
       ! call sort again on the already sorted data
       CALL CPU_TIME(time1)
-      !CALL simplesort(dat)
-      !CALL bubblesort(dat)
-      !CALL insertionsort(dat)
-      !CALL BoUpMergeSort(dat)
-      CALL hybridsort(dat)
-      !CALL quicksort(dat)
+      CALL simplesort(dat)
       CALL CPU_TIME(time2)
       WRITE(*,FMT=666) num, 'already sorted', time2-time1
       if ( .NOT. is_sorted(num, dat, asc)) PRINT*, "Warning, the file is not sorted correctly!"
