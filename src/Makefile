@@ -29,22 +29,28 @@ all: 01 02 03
 	for i in `seq 1 6 `; do ./08_multmodules.x < ../data/d3\_$$i.dat; done
 
 09: 09_simplesort.x
-	./09_simplesort.x
+	#./09_simplesort.x
+	perf stat -B -e cache-references,cache-misses,cycles,instructions,branches,faults,migrations ./09_simplesort.x
 
 10: 10_bubblesort.x
-	./10_bubblesort.x
+	#./10_bubblesort.x
+	perf stat -B -e cache-references,cache-misses,cycles,instructions,branches,faults,migrations ./10_bubblesort.x
 
 11: 11_insertionsort.x
-	./11_insertionsort.x
+	#./11_insertionsort.x
+	perf stat -B -e cache-references,cache-misses,cycles,instructions,branches,faults,migrations ./11_insertionsort.x
 
 12: 12_quicksort.x
-	./12_quicksort.x
+	#./12_quicksort.x
+	perf stat -B -e cache-references,cache-misses,cycles,instructions,branches,faults,migrations ./12_quicksort.x
 
 13: 13_mergesort.x
-	./13_mergesort.x
+	#./13_mergesort.x
+	perf stat -B -e cache-references,cache-misses,cycles,instructions,branches,faults,migrations ./13_mergesort.x
 
 14: 14_hybridsort.x
-	./14_hybridsort.x
+	#./14_hybridsort.x
+	perf stat -B -e cache-references,cache-misses,cycles,instructions,branches,faults,migrations ./14_hybridsort.x
 
 17: 17_linked_list.x
 	#for i in `seq 1 6 `; do ./17_linked_list.x < ../data/d3\_$$i.dat; done
