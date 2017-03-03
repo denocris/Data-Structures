@@ -47,22 +47,28 @@ all: 01 02 03
 	./14_hybridsort.x
 
 17: 17_linked_list.x
-	for i in `seq 1 6 `; do ./17_linked_list.x < ../data/d3\_$$i.dat; done
+	#for i in `seq 1 6 `; do ./17_linked_list.x < ../data/d3\_$$i.dat; done
+	for i in `seq 1 6 `; do valgrind ./17_linked_list.x < ../data/d3\_$$i.dat; done
 
 18: 18_hash_table.x
-	for i in `seq 1 6 `; do ./18_hash_table.x < ../data/d3\_$$i.dat; done
+	#for i in `seq 1 6 `; do ./18_hash_table.x < ../data/d3\_$$i.dat; done
+	for i in `seq 1 6 `; do valgrind ./18_hash_table.x < ../data/d3\_$$i.dat; done
 
 19: 19_stack_array.x
-	./19_stack_array.x
+	#./19_stack_array.x
+	valgrind ./19_stack_array.x
 
 20: 20_stack_list.x
-	./20_stack_list.x
+	#./20_stack_list.x
+	valgrind ./20_stack_list.x
 
 21: 21_binary_tree.x
-	for i in `seq 1 6 `; do ./21_binary_tree.x < ../data/d3\_$$i.dat; done
+	#for i in `seq 1 6 `; do ./21_binary_tree.x < ../data/d3\_$$i.dat; done
+	for i in `seq 1 6 `; do valgrind ./21_binary_tree.x < ../data/d3\_$$i.dat; done
 
 22: 22_binary_tree.x
-	for i in `seq 1 6 `; do ./22_binary_tree.x< ../data/d3\_$$i.dat; done
+	#for i in `seq 1 6 `; do ./22_binary_tree.x< ../data/d3\_$$i.dat; done
+	for i in `seq 1 6 `; do valgrind ./22_binary_tree.x< ../data/d3\_$$i.dat; done
 
 23: 23_reb_binary_tree.x
 	#for i in `seq 1 6 `; do ./23_reb_binary_tree.x < ../data/d3\_$$i.dat; done
