@@ -1,6 +1,8 @@
 
 I apologize for the sort report. It contains just the necessary data and results.
 
+All the assignments are contained in the folder 'src/' of the master branch and they were all tested with valgrind.
+
 #####Sorting algorithms
 
 All the sorting algorithms were run on Ulysses cluster. Everything has been tested on three different cases: unsorted, sorted and mostly sorted data. The sizes of the array were: 2000, 5000, 10000, 20000, 50000, 100000, 200000.
@@ -16,7 +18,7 @@ In fig.2 the bubble sorting is not reported since too slow compared with respect
 
 ![Figure_3](not_sorted.png)
 
-I was expecting the growth of time a little bit different (sometimes it seems linear). I think that probably the sizes chosen for the arrays were not appropriate for a proper time measure. 
+I was expecting the growth of time a little bit different (sometimes it seems linear). I think that probably the sizes chosen for the arrays were not appropriate for a proper time measure.
 
 ####Perf analisys
 
@@ -48,4 +50,6 @@ data 5 |0.650000 ms| 1.370000 ms | 0.146000 ms  | 0.323000 ms |  0.347000 ms |
 data 6 |1.682000 ms| 1.367000 ms | 0.132000 ms | 0.414000 ms |  0.394000 ms |
 
 
-As expected the rebalanced binary tree is the fastest. However very good performances can be achieved if the number of buckets of the hast table is more or less equal to nlook.
+![Figure_1](datastr.png)
+
+The hash table is the fastest method, in particular if the number of buckets of the hast table is more or less equal to nlook. Very good performances are obtained also by the rebalanced binary tree.
